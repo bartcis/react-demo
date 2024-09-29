@@ -71,3 +71,5 @@ export const InfiniteList = ({
     </List>
   );
 };
+
+export default InfiniteList;

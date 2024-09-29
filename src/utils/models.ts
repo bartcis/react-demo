@@ -24,4 +24,5 @@ export interface Page {
   incompleteResults: boolean;
   totalCount: number;
   items: User[];
+  message?: string;
 }

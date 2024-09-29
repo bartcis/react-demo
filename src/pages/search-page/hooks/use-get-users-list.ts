@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
+
 import { UsersQueryKeys } from "../../../utils/query-keys";
-// @ts-ignore
-import * as changeKeys from "change-case/keys";
 import { Page } from "../../../utils/models";
+import { snakeToCamel } from "../../../utils/snake-to-camel";
 
 const API_PAGE_LIMIT = 30;
 
@@ -24,18 +24,20 @@ export const useGetUsersList = () => {
       const response = await fetch(
         `https://api.github.com/search/users?q=${searchPhrase}&page=${pageParam}&per_page=${API_PAGE_LIMIT}`
       );
+
       const result = await response.json();
-      const camelCasedResult = changeKeys.camelCase(result, 3);
       setIsTyping(false);
 
-      if (camelCasedResult.message) {
+      if (result.message) {
         throw new Error();
       }
+
+      const camelCasedResult = snakeToCamel(result) as unknown as Page;
 
       return camelCasedResult;
     },
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages, d, g) => {
+    getNextPageParam: (lastPage, allPages) => {
       return lastPage.items?.length === API_PAGE_LIMIT && !isTyping
         ? allPages.length + 1
         : undefined;
