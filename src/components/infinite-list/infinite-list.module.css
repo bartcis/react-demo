@@ -1,0 +1,8 @@
+.List {
+  height: calc(100vh - 20rem);
+  overflow: auto;
+}
+
+.Indicator {
+  text-align: center;
+}
