@@ -60,10 +60,14 @@ export const InfiniteList = ({
   return (
     <List className={styles.List}>
       {statusText && <p className={styles.Indicator}>{statusText}</p>}
-      {!statusText && children}
-      <p ref={ref} className={styles.Indicator}>
-        {listState}
-      </p>
+      {!statusText && (
+        <>
+          {children}
+          <p ref={ref} className={styles.Indicator}>
+            {listState}
+          </p>
+        </>
+      )}
     </List>
   );
 };

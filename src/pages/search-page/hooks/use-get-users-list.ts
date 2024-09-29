@@ -46,7 +46,10 @@ export const useGetUsersList = () => {
   });
 
   const handleSubmit = useCallback(
-    (userName: string) => setSearchPhrase(userName),
+    (userName: string) => {
+      setSearchPhrase(userName);
+      setIsTyping(false);
+    },
     [setSearchPhrase]
   );
 
