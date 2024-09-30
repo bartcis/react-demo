@@ -38,8 +38,11 @@ test("should return expected output", () => {
   expect(result.current.isFetchingNextPage).toEqual(false);
 });
 
-// issues with nock intercepting fetch, probably I would have to change tooling but
-// for sake of this excercise we can consider it quasi - test
+// I tried to add API test but currently Create React App apps (like this one) seem to have problem with compiling Jest (or intercepting a call)
+// when using HTTP requests intercepting with modern packages like eg. nock or msw.
+// eg. https://github.com/mswjs/msw/issues/1796
+// Fixing it more time consuming that writing the tests and is outside of the scope of this task.
+// Some pseudo-test added instead. To fix it I would have to work on proper production project setup
 test.skip("should send API call and update data when searchPhrase is set", async () => {
   const searchPhrase = "John";
   const expectation = nock(`https://api.github.com`)
