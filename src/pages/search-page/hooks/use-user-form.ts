@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useCallback, useEffect } from "react";
 import { useDebounce } from "../../../hooks/use-debounce";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { formValidator } from "../../../utils/form";
 
 export interface UseUserFormProps {
   onSubmit: (userName: string) => void;
@@ -12,6 +14,7 @@ export const useUserForm = ({ onSubmit, onInputChange }: UseUserFormProps) => {
     defaultValues: {
       userName: "",
     },
+    resolver: yupResolver(formValidator),
   });
 
   // useDebounce tez bazuje na Curryingu

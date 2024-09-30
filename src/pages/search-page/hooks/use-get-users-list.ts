@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 import { UsersQueryKeys } from "../../../utils/query-keys";
@@ -26,7 +26,6 @@ export const useGetUsersList = () => {
       );
 
       const result = await response.json();
-      setIsTyping(false);
 
       if (result.message) {
         throw new Error();
@@ -47,12 +46,18 @@ export const useGetUsersList = () => {
     staleTime: 120000,
   });
 
+  useEffect(() => {
+    if (!searchPhrase && isTyping) {
+      setIsTyping(false);
+    }
+  }, [searchPhrase, isTyping]);
+
   const handleSubmit = useCallback(
     (userName: string) => {
       setSearchPhrase(userName);
       setIsTyping(false);
     },
-    [setSearchPhrase]
+    [setSearchPhrase, setIsTyping]
   );
 
   // Memoizacja tez jest uzyciem programowania funkcyjnego Currying - https://dev.to/uttarasriya/js-polyfills-part-6-curry-memoise-and-generator-functions-1d71
